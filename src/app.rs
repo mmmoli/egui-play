@@ -4,6 +4,7 @@
 pub struct TemplateApp {
     // Example stuff:
     label: String,
+    name: String,
 
     // this how you opt-out of serialization of a member
     #[serde(skip)]
@@ -15,6 +16,7 @@ impl Default for TemplateApp {
         Self {
             // Example stuff:
             label: "Hello World!".to_owned(),
+            name: "Michele".to_owned(),
             value: 2.7,
         }
     }
@@ -45,7 +47,7 @@ impl eframe::App for TemplateApp {
     /// Called each time the UI needs repainting, which may be many times per second.
     /// Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        let Self { label, value } = self;
+        let Self { label, value, name } = self;
 
         // Examples of how to create different panels and windows.
         // Pick whichever suits you.
@@ -68,7 +70,14 @@ impl eframe::App for TemplateApp {
             ui.heading("Side Panel");
 
             ui.horizontal(|ui| {
-                ui.label("Write something: ");
+                ui.label("Your name: ");
+                ui.text_edit_singleline(name);
+            });
+
+            ui.label(format!("Hello '{}'", name));
+
+            ui.horizontal(|ui| {
+                ui.label("Write something fun: ");
                 ui.text_edit_singleline(label);
             });
 
